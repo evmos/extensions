@@ -1,4 +1,4 @@
-# Precompiled contract examples
+# EVM Extensions
 
 *🚧 NOTE: This project is still a work in progress 🚧*
 
