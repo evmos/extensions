@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: BUSL-only
+// SPDX-License-Identifier: LGPL-v3
 pragma solidity >=0.8.17;
 
 import "../../precompiles/Staking.sol";
