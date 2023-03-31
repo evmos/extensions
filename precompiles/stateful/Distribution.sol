@@ -1,56 +1,41 @@
-// SPDX-License-Identifier:  LGPL-v3
-pragma solidity >=0.8.17;
+// SPDX-License-Identifier: LGPL-v3
+pragma solidity >=0.8.17 .0;
 
-import "Authorization.sol" as authorization;
+import "./common/GenericAuthorization.sol" as authorization;
+import "./common/Types.sol";
 
 /// @dev The DistributionI contract's address.
 address constant DISTRIBUTION_PRECOMPILE_ADDRESS = 0x0000000000000000000000000000000000000801;
 
 /// @dev Define all the available distribution methods.
-string constant MSG_SET_WITHDRAWER_ADDRESS = "/cosmos.distribution.v1beta1.SetWithdrawAddress";
-string constant MSG_WITHDRAW_DELEGATOR_REWARD = "/cosmos.distribution.v1beta1.WithdrawDelegatorReward";
-string constant MSG_WITHDRAW_VALIDATOR_COMMISSION = "/cosmos.distribution.v1beta1.WithdrawValidatorCommission";
+string constant MSG_SET_WITHDRAWER_ADDRESS = "/cosmos.distribution.v1beta1.MsgSetWithdrawAddress";
+string constant MSG_WITHDRAW_DELEGATOR_REWARD = "/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward";
+string constant MSG_WITHDRAW_VALIDATOR_COMMISSION = "/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission";
 
 /// @dev The DistributionI contract's instance.
 DistributionI constant DISTRIBUTION_CONTRACT = DistributionI(DISTRIBUTION_PRECOMPILE_ADDRESS);
 
-struct PageResponse {
-    bytes nextKey;
-    uint64 total;
-}
-
-/// @dev Representation of a decimal value.
-struct Dec {
-    uint256 value;
-    uint8 precision;
-}
-
-struct Coin {
-    string denom;
-    uint256 amount;
-}
-
 struct ValidatorSlashEvent {
     uint64 validatorPeriod;
-    uint256 fraction; // TODO: type Dec
+    Dec fraction;
 }
 
 struct ValidatorDistributionInfo {
     string operatorAddress;
-    Coin[] selfBondRewards;
-    Coin[] commission;
+    DecCoin[] selfBondRewards;
+    DecCoin[] commission;
 }
 
 struct DelegationDelegatorReward {
     string validatorAddress;
-    Coin reward;
+    DecCoin[] reward;
 }
 
 /// @author Evmos Team
 /// @title Distribution Precompile Contract
 /// @dev The interface through which solidity contracts will interact with Distribution
-/// @custom:address 0x0000000000000000000000000000000000000101
-interface DistributionI is authorization.AuthorizationI {
+/// @custom:address 0x0000000000000000000000000000000000000801
+interface DistributionI is authorization.GenericAuthorizationI {
     /// TRANSACTIONS
     /// @dev Change the address, that can withdraw the rewards of a delegator.
     /// Note that this address cannot be a module account.
@@ -60,7 +45,7 @@ interface DistributionI is authorization.AuthorizationI {
     function setWithdrawAddress(
         address delegatorAddress,
         string memory withdrawerAddress
-    ) external;
+    ) external returns (bool success);
 
     /// @dev Withdraw the rewards of a delegator from a validator
     /// @param delegatorAddress The address of the delegator
@@ -96,7 +81,7 @@ interface DistributionI is authorization.AuthorizationI {
     external
     view
     returns (
-        ValidatorDistributionInfo[] calldata distributionInfo
+        ValidatorDistributionInfo[] calldata distributionInfo // FIXME: remove unnecessary slice
     );
 
     /// @dev Queries the outstanding rewards of a validator address.
@@ -108,7 +93,7 @@ interface DistributionI is authorization.AuthorizationI {
     external
     view
     returns (
-        Coin[] calldata rewards
+        DecCoin[] calldata rewards
     );
 
     /// @dev Queries the accumulated commission for a validator.
@@ -120,7 +105,7 @@ interface DistributionI is authorization.AuthorizationI {
     external
     view
     returns (
-        Coin[] calldata commission
+        DecCoin[] calldata commission
     );
 
     /// @dev Queries the slashing events for a validator in a given height interval
@@ -153,7 +138,7 @@ interface DistributionI is authorization.AuthorizationI {
     external
     view
     returns (
-        Coin[] calldata rewards
+        DecCoin[] calldata rewards
     );
 
     /// @dev Queries the total rewards accrued by each validator, that a given
@@ -168,7 +153,7 @@ interface DistributionI is authorization.AuthorizationI {
     view
     returns (
         DelegationDelegatorReward[] calldata rewards,
-        Coin calldata total
+        DecCoin[] calldata total
     );
 
     /// @dev Queries all validators, that a given address has delegated to.

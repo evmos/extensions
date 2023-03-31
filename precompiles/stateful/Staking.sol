@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: LGPL-v3
 pragma solidity >=0.8.17;
 
-import "Authorization.sol" as authorization;
+import "./common/Authorization.sol" as authorization;
+import "./common/Types.sol";
 
 /// @dev The StakingI contract's address.
 address constant STAKING_PRECOMPILE_ADDRESS = 0x0000000000000000000000000000000000000800;
@@ -29,11 +30,6 @@ struct Commission {
     uint256 updateTime;
 }
 
-/// @dev Represents a decimal value.
-struct Dec {
-    uint256 value;
-    uint8 precision;
-}
 
 /// @dev Represents a validator in the staking module.
 struct Validator {
@@ -68,7 +64,7 @@ struct RedelegationEntry {
     int64 creationHeight;
     int64 completionTime;
     uint256 initialBalance;
-    uint256 sharesDst; // TODO: decimal
+    uint256 sharesDst;
 }
 
 struct UnbondingDelegationEntry {
@@ -78,23 +74,12 @@ struct UnbondingDelegationEntry {
     uint256 balance;
 }
 
-/// @dev Represents an amount of a certain denomination.
-struct Coin {
-    string denom;
-    uint256 amount;
-}
-
 struct PageRequest {
     bytes key;
     uint64 offset;
     uint64 limit;
     bool countTotal;
     bool reverse;
-}
-
-struct PageResponse {
-    bytes nextKey;
-    uint64 total;
 }
 
 /// @dev The status of the validator.
