@@ -2,10 +2,10 @@
 pragma solidity >=0.8.17;
 
 /// @dev The ICS20I contract's address.
-address constant ICS20_PRECOMPILE_ADDRESS = 0x0000000000000000000000000000000000000802;
+address constant IBC_TRANSFER_PRECOMPILE_ADDRESS = 0x0000000000000000000000000000000000000802;
 
 /// @dev The ICS20 contract's instance.
-ICS20I constant ICS20_CONTRACT = ICS20I(ICS20_PRECOMPILE_ADDRESS);
+IBCTransferI constant IBC_TRANSFER_CONTRACT = IBCTransferI(ICS20_PRECOMPILE_ADDRESS);
 
 // Height is a monotonically increasing data type
 // that can be compared against another Height for the purposes of updating and
@@ -39,7 +39,7 @@ struct DenomTrace {
 /// @dev The interface through which solidity contracts will interact with IBC Transfer (ICS20)
 /// FIXME: update address
 /// @custom:address 0x0000000000000000000000000000000000000802
-interface ICS20I {
+interface IBCTransferI {
     /// @dev Transfer defines a method for performing an IBC transfer.
     /// @param sourcePort the address of the validator
     /// @param sourceChannel the address of the validator
