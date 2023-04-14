@@ -37,7 +37,7 @@ contract StakingManager {
     /// @param _amount The amount of tokens to stake in aevmos.
     /// @return completionTime The completion time of the staking transaction.
     function stakeTokens(string memory _validatorAddr, uint256 _amount) public returns (uint256 completionTime) {
-        return STAKING_CONTRACT.delegate(_validatorAddr, amount, stakingMethods);
+        return STAKING_CONTRACT.delegate(msg.sender, _validatorAddr, amount);
     }
 
     /// @dev redelegate a given amount of tokens. Returns the completion time of the redelegate transaction.
@@ -56,7 +56,7 @@ contract StakingManager {
     /// @param _amount The amount of tokens to unstake in aevmos.
     /// @return completionTime The completion time of the unstaking transaction.
     function unstakeTokens(string memory _validatorAddr, uint256 _amount) public returns (uint256 completionTime) {
-        return STAKING_CONTRACT.undelegate(_validatorAddr, amount, stakingMethods);
+        return STAKING_CONTRACT.undelegate(msg.sender, _validatorAddr, amount);
     }
 
     /// @dev cancel an unbonding delegation. Returns the completion time of the unbonding delegation cancellation transaction.
