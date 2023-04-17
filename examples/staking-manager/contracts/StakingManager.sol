@@ -36,8 +36,8 @@ contract StakingManager {
     /// @param _validatorAddr The address of the validator.
     /// @param _amount The amount of tokens to stake in aevmos.
     /// @return completionTime The completion time of the staking transaction.
-    function stakeTokens(string memory _validatorAddr, uint256 _amount) public returns (uint256 completionTime) {
-        return STAKING_CONTRACT.delegate(msg.sender, _validatorAddr, amount);
+    function stakeTokens(string memory _validatorAddr, uint256 _amount) public returns (int64 completionTime) {
+        return STAKING_CONTRACT.delegate(msg.sender, _validatorAddr, _amount);
     }
 
     /// @dev redelegate a given amount of tokens. Returns the completion time of the redelegate transaction.
@@ -46,8 +46,8 @@ contract StakingManager {
     /// @param _validatorDstAddr The address of the destination validator.
     /// @param _amount The amount of tokens to redelegate in aevmos.
     /// @return completionTime The completion time of the redelegate transaction.
-    function redelegateTokens(string memory _validatorSrcAddr, string memory _validatorDstAddr, uint256 _amount) public returns (uint256 completionTime) {
-        return STAKING_CONTRACT.redelegate(msg.sender, _validatorSrcAddr, _validatorDstAddr, amount);
+    function redelegateTokens(string memory _validatorSrcAddr, string memory _validatorDstAddr, uint256 _amount) public returns (int64 completionTime) {
+        return STAKING_CONTRACT.redelegate(msg.sender, _validatorSrcAddr, _validatorDstAddr, _amount);
     }
 
     /// @dev unstake a given amount of tokens. Returns the completion time of the unstaking transaction.
@@ -55,8 +55,8 @@ contract StakingManager {
     /// @param _validatorAddr The address of the validator.
     /// @param _amount The amount of tokens to unstake in aevmos.
     /// @return completionTime The completion time of the unstaking transaction.
-    function unstakeTokens(string memory _validatorAddr, uint256 _amount) public returns (uint256 completionTime) {
-        return STAKING_CONTRACT.undelegate(msg.sender, _validatorAddr, amount);
+    function unstakeTokens(string memory _validatorAddr, uint256 _amount) public returns (int64 completionTime) {
+        return STAKING_CONTRACT.undelegate(msg.sender, _validatorAddr, _amount);
     }
 
     /// @dev cancel an unbonding delegation. Returns the completion time of the unbonding delegation cancellation transaction.
@@ -64,21 +64,21 @@ contract StakingManager {
     /// @param _validatorAddr The address of the validator.
     /// @param _amount The amount of tokens to cancel the unbonding delegation in aevmos.
     /// @param _creationHeight The creation height of the unbonding delegation.
-    function cancelUnbondingDelegation(string memory _validatorAddr, uint256 _amount, uint256 creationHeight) public returns (uint256 completionTime) {
+    function cancelUnbondingDelegation(string memory _validatorAddr, uint256 _amount, uint256 _creationHeight) public returns (int64 completionTime) {
         return STAKING_CONTRACT.cancelUnbondingDelegation(msg.sender, _validatorAddr, _amount, _creationHeight);
     }
 
     /// @dev Returns the delegation information for a given validator for the msg sender.
     /// @param _validatorAddr The address of the validator.
-    /// @return The delegation information for a given validator for the msg sender.
+    /// @return shares and balance. The delegation information for a given validator for the msg sender.
     function getDelegation(string memory _validatorAddr) public view returns (uint256 shares, Coin memory balance) {
         return STAKING_CONTRACT.delegation(msg.sender, _validatorAddr);
     }
 
     /// @dev Returns the unbonding delegation information for a given validator for the msg sender.
     /// @param _validatorAddr The address of the validator.
-    /// @return The unbonding delegation entries for a given validator for the msg sender.
-    function getUnbondingDelegation(string memory _validatorAddr) public view returns (UnbondingDelegationEntry[] calldata entries) {
+    /// @return entries The unbonding delegation entries for a given validator for the msg sender.
+    function getUnbondingDelegation(string memory _validatorAddr) public view returns (UnbondingDelegationEntry[] memory entries) {
         return STAKING_CONTRACT.unbondingDelegation(msg.sender, _validatorAddr);
     }
 }
