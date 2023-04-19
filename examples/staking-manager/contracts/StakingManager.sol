@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: LGPL-v3
 pragma solidity >=0.8.17;
 
-import "../../precompiles/Staking.sol";
+import "../../../precompiles/stateful/Staking.sol";
 
 contract StakingManager {
     string[] private stakingMethods = [MSG_DELEGATE, MSG_UNDELEGATE, MSG_REDELEGATE, MSG_CANCEL_UNDELEGATION];
