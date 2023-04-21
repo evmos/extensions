@@ -2,7 +2,7 @@
 pragma solidity >=0.8.17;
 
 /// @dev The Bech32I contract's address.
-address constant Bech32_PRECOMPILE_ADDRESS = 0x0000000000000000000000000000000000000010;
+address constant Bech32_PRECOMPILE_ADDRESS = 0x0000000000000000000000000000000000000400;
 
 /// @author Evmos Team
 /// @title Bech32 Precompiled Contract
