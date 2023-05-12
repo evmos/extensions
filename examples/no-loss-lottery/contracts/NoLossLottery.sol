@@ -67,7 +67,8 @@ contract NoLossLottery {
         // Make sure that the sender has balance in our deposits map
         require(deposits[msg.sender] >= _amount, "Deposit amount larger than requested withdraw");
         // Transfer the requested amount of Evmos to the sender.
-        payable(msg.sender).transfer(_amount);
+        (bool sent,) = payable(msg.sender).call{value: _amount}("");
+        require(sent, "Failed to send Evmos");
         delete unbondingDelegations[msg.sender];
         emit Withdraw(msg.sender, _amount);
     }
@@ -75,7 +76,7 @@ contract NoLossLottery {
     // Withdraw winnings from contract
     function withdrawWinnings() public {
         require(winnings[msg.sender] > 0, "You have no winnings yet");
-        payable(msg.sender).transfer(winnings[msg.sender]);
+        (bool sent,) = payable(msg.sender).call{value: winnings[msg.sender]}("");
         winnings[msg.sender] = 0;
         emit WithdrawWinnings(msg.sender, winnings[msg.sender]);
     }

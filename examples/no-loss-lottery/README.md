@@ -3,6 +3,12 @@
 This is an example of how to create a smart contract for a no-loss-lottery that utilizes
 the `Staking` and `Distribution` precompiled contracts - [NoLossLottery](./contracts/NoLossLottery.sol)
 
+A no-loss-lottery is a lottery where users deposit funds into a pool and delegate them to a validator. Once a day
+when the staking rewards are distributed, a random winner is picked from the pool of users based on their
+deposit amount (the higher deposit the better odds of winning the pool). The winner receives the total pot of rewards 
+for that day. The users that did not win the lottery can withdraw their funds at any time without losing any 
+of their initial deposit.
+
 The contract showcases how you can use the contract itself as a manager of funds to ensure
 that users cannot undelegate their funds at any time skewing the lottery results.
 
@@ -45,6 +51,12 @@ the total amount delegated can be undelegated for simplicity. Once the 14 day un
 funds return to the contract and users can withdraw their funds using the `withdraw` function.
 
 ## Limitations
+
+### No SafeMath 
+
+
+The contract does not use OpenZeppelin's `SafeMath` library. This is fine for a showcase but be aware when deploying
+to testnet or mainnet you would need to use `SafeMath` to prevent overflows.
 
 ### No Oracle randomness
 
