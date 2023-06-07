@@ -13,6 +13,8 @@ contract SimpleStaker {
     /// @dev This creates a Cosmos Authorization Grants for the given methods.
     /// @dev This emits an Approval event.
     function approveRequiredMethods() public {
+
+        string[] memory allowedList = new string[](0); // Defaults to tx.origin when empty
         bool success = STAKING_CONTRACT.approve(
             msg.sender,
             type(uint256).max,
@@ -20,8 +22,9 @@ contract SimpleStaker {
         );
         require(success, "Failed to approve delegate method");
         success = DISTRIBUTION_CONTRACT.approve(
-            msg.sender,
-            distributionMethods
+            address(this),
+            distributionMethods,
+            allowedList
         );
         require(success, "Failed to approve withdraw delegator rewards method");
     }

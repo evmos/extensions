@@ -26,7 +26,8 @@ We have provided convenient constants - `MSG_DELEGATE`, `MSG_UNDELEGATE`,
 `MSG_REDELEGATE`, `MSG_CANCEL_UNDELEGATION`, `MSG_SET_WITHDRAWER_ADDRESS`,
 `MSG_WITHDRAW_DELEGATOR_REWARD`, `MSG_WITHDRAW_VALIDATOR_COMMISSION` - for easier use.
 
-This is done by calling the `approve` function and will create an authorization grant for the given Cosmos SDK message.
+This is done by calling the `approve` function and will create an authorization grant for the given Cosmos SDK message
+for the given spender address (this usually should be `address(this)` to approve the calling contract.
 
 Note that the `approve` method for the `Staking` precompiled is different
 than the `Distribution` precompiled.

@@ -19,9 +19,40 @@
         "internalType": "string[]",
         "name": "methods",
         "type": "string[]"
+      },
+      {
+        "indexed": false,
+        "internalType": "string[]",
+        "name": "allowedList",
+        "type": "string[]"
       }
     ],
     "name": "Approval",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "spender",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "string[]",
+        "name": "methods",
+        "type": "string[]"
+      }
+    ],
+    "name": "Revocation",
     "type": "event"
   },
   {
@@ -97,6 +128,11 @@
       {
         "internalType": "string[]",
         "name": "methods",
+        "type": "string[]"
+      },
+      {
+        "internalType": "string[]",
+        "name": "allowedList",
         "type": "string[]"
       }
     ],
@@ -258,6 +294,30 @@
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "spender",
+        "type": "address"
+      },
+      {
+        "internalType": "string[]",
+        "name": "methods",
+        "type": "string[]"
+      }
+    ],
+    "name": "revoke",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "revoked",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -442,6 +502,38 @@
         "internalType": "uint64",
         "name": "endingHeight",
         "type": "uint64"
+      },
+      {
+        "components": [
+          {
+            "internalType": "bytes",
+            "name": "key",
+            "type": "bytes"
+          },
+          {
+            "internalType": "uint64",
+            "name": "offset",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "limit",
+            "type": "uint64"
+          },
+          {
+            "internalType": "bool",
+            "name": "countTotal",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "reverse",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct PageRequest",
+        "name": "pageRequest",
+        "type": "tuple"
       }
     ],
     "name": "validatorSlashes",

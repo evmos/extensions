@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: LGPL-v3
 pragma solidity >=0.8.17 .0;
 
-import "../common/GenericAuthorization.sol" as genericAuth;
+import "../common/DistributionAuthorization.sol" as distributionAuth;
 import "../common/Types.sol";
 
 /// @dev The DistributionI contract's address.
@@ -35,7 +35,7 @@ struct DelegationDelegatorReward {
 /// @title Distribution Precompile Contract
 /// @dev The interface through which solidity contracts will interact with Distribution
 /// @custom:address 0x0000000000000000000000000000000000000801
-interface DistributionI is genericAuth.GenericAuthorizationI {
+interface DistributionI is distributionAuth.DistributionAuthorizationI {
     /// TRANSACTIONS
     /// @dev Change the address, that can withdraw the rewards of a delegator.
     /// Note that this address cannot be a module account.

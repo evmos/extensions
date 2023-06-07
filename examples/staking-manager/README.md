@@ -14,7 +14,8 @@ the approval and execution of the staking transaction or to combine them into a 
 
 We have provided convenient constants - `MSG_DELEGATE`, `MSG_UNDELEGATE`, `MSG_REDELEGATE`, `MSG_CANCEL_UNDELEGATION` for easier use.
 
-This is done by calling the `approve` function and will create an authorization grant for the given Cosmos SDK message. 
+This is done by calling the `approve` function and will create an authorization grant for the given Cosmos SDK message
+for the given spender address (this usually should be `address(this)` to approve the calling contract.
 
 ## Allowances
 
