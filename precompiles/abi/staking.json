@@ -499,9 +499,9 @@
 	{
 		"inputs": [
 			{
-				"internalType": "address",
+				"internalType": "string",
 				"name": "delegatorAddress",
-				"type": "address"
+				"type": "string"
 			},
 			{
 				"internalType": "string",
@@ -552,6 +552,21 @@
 				"components": [
 					{
 						"components": [
+							{
+								"internalType": "string",
+								"name": "delegatorAddress",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "validatorSrcAddress",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "validatorDstAddress",
+								"type": "string"
+							},
 							{
 								"components": [
 									{
@@ -624,8 +639,25 @@
 						"type": "tuple[]"
 					}
 				],
-				"internalType": "struct RedelegationResponse",
+				"internalType": "struct RedelegationResponse[]",
 				"name": "response",
+				"type": "tuple[]"
+			},
+			{
+				"components": [
+					{
+						"internalType": "bytes",
+						"name": "nextKey",
+						"type": "bytes"
+					},
+					{
+						"internalType": "uint64",
+						"name": "total",
+						"type": "uint64"
+					}
+				],
+				"internalType": "struct PageResponse",
+				"name": "pageResponse",
 				"type": "tuple"
 			}
 		],

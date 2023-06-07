@@ -30,7 +30,6 @@ struct Commission {
     uint256 updateTime;
 }
 
-
 /// @dev Represents a validator in the staking module.
 struct Validator {
     string operatorAddress;
@@ -52,6 +51,9 @@ struct RedelegationResponse {
 }
 
 struct Redelegation {
+    string delegatorAddress;
+    string validatorSrcAddress;
+    string validatorDstAddress;
     RedelegationEntry[] entries;
 }
 
@@ -171,10 +173,7 @@ interface StakingI is authorization.AuthorizationI {
     /// @return validators The validator info for the given validator address.
     function validator(
         string memory validatorAddress
-    )
-    external view returns (
-        Validator[] calldata validators
-    );
+    ) external view returns (Validator[] calldata validators);
 
     /// @dev Queries all validators that match the given status.
     /// @param status Enables to query for validators matching a given status.
@@ -182,10 +181,13 @@ interface StakingI is authorization.AuthorizationI {
     function validators(
         string memory status,
         PageRequest calldata pageRequest
-    ) external view returns (
-        Validator[] calldata validators,
-        PageResponse calldata pageResponse
-    );
+    )
+        external
+        view
+        returns (
+            Validator[] calldata validators,
+            PageResponse calldata pageResponse
+        );
 
     /// @dev Queries all redelegations from a source to a destination validator for a given delegator.
     /// @param delegatorAddress The address of the delegator.
@@ -198,19 +200,27 @@ interface StakingI is authorization.AuthorizationI {
         string memory dstValidatorAddress
     ) external view returns (RedelegationEntry[] calldata entries);
 
-    /// @dev Queries all redelegations from a source to to a destination validator
-    /// for a given delegator in a specified pagination manner.
-    /// @param delegatorAddress The address of the delegator.
-    /// @param srcValidatorAddress Defines the validator address to redelegate from.
-    /// @param dstValidatorAddress Defines the validator address to redelegate to.
+    /// @dev Queries all redelegations based on the specified criteria:
+    /// for a given delegator and/or origin validator address
+    /// and/or destination validator address
+    /// in a specified pagination manner.
+    /// @param delegatorAddress The address of the delegator as string (can be empty string).
+    /// @param srcValidatorAddress Defines the validator address to redelegate from (can be empty string).
+    /// @param dstValidatorAddress Defines the validator address to redelegate to (can be empty string).
     /// @param pageRequest Defines an optional pagination for the request.
     /// @return response Holds the redelegations for the given delegator, source and destination validator combination.
     function redelegations(
-        address delegatorAddress,
+        string memory delegatorAddress,
         string memory srcValidatorAddress,
         string memory dstValidatorAddress,
         PageRequest calldata pageRequest
-    ) external view returns (RedelegationResponse calldata response);
+    )
+        external
+        view
+        returns (
+            RedelegationResponse[] calldata response,
+            PageResponse calldata pageResponse
+        );
 
     /// @dev Delegate defines an Event emitted when a given amount of tokens are delegated from the
     /// delegator address to the validator address.
