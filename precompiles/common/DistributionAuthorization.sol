@@ -1,17 +1,19 @@
-// SPDX-License-Identifier: LGPL-v3
-pragma solidity >=0.8.17;
+// SPDX-License-Identifier: LGPL-3.0-only
+pragma solidity >=0.8.17 .0;
 
 /// @author Evmos Team
-/// @title Authorization Interface
+/// @title Distribution Authorization Interface
 /// @dev The interface through which solidity contracts will interact with smart contract approvals.
-interface GenericAuthorizationI {
-    /// @dev Approves a list of Cosmos or IBC transactions with a specific amount of tokens.
+interface DistributionAuthorizationI {
+    /// @dev Approves a list of Cosmos transactions with a specific allowed list of addresses.
     /// @param spender The address which will spend the funds.
     /// @param methods The message type URLs of the methods to approve.
+    /// @param allowedList The list of allowed addresses.
     /// @return approved Boolean value to indicate if the approval was successful.
     function approve(
         address spender,
-        string[] calldata methods
+        string[] calldata methods,
+        string[] calldata allowedList
     ) external returns (bool approved);
 
     /// @dev Revokes a list of Cosmos transactions.
@@ -32,7 +34,8 @@ interface GenericAuthorizationI {
     event Approval(
         address indexed owner,
         address indexed spender,
-        string[] methods
+        string[] methods,
+        string[] allowedList
     );
 
     /// @dev This event is emitted when an owner revokes a spender's allowance.
