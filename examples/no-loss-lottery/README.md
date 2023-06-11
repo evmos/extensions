@@ -65,12 +65,6 @@ The contract does not use an oracle for its random number generator or `shuffleP
 This is fine for a showcase but be aware when deploying to testnet or mainnet you would need a verifiable
 source of randomness.
 
-### Usage of `tx.origin` for Approvals
-
-
-This contract uses `tx.origin` for approvals to ensure only the user that deposited the funds can withdraw.
-This is limiting to only EOAs and not smart contracts. Ideally the contract would use `msg.sender` for approvals and
-allow smart contracts to interface with the contract.
 
 ### No Owner for the Contract
 
