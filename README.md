@@ -28,7 +28,7 @@ and even manage accounts on other blockchains to access any functionality built 
 ### Prerequisites
 
 - Familiarity with Solidity interfaces - [Interfaces by example](https://solidity-by-example.org/interface/)
-- Familiarity with Cosmos SDK modules - `x/staking` `x/distribution` and `x/authz`.
+- Familiarity with Cosmos SDK modules - `x/staking` `x/distribution`, `ics20`, and `x/authz`.
 - Familiarity with token approval mechanism similar to how `ERC20` tokens are approved for transfer.
 
 ### Structure
