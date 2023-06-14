@@ -1,7 +1,7 @@
-// SPDX-License-Identifier: LGPL-v3
+// SPDX-License-Identifier: LGPL-3.0-only
 pragma solidity >=0.8.17 .0;
 
-import "../common/DistributionAuthorization.sol" as distributionAuth;
+import "../authorization/DistributionAuthorization.sol" as authorization;
 import "../common/Types.sol";
 
 /// @dev The DistributionI contract's address.
@@ -13,29 +13,31 @@ string constant MSG_WITHDRAW_DELEGATOR_REWARD = "/cosmos.distribution.v1beta1.Ms
 string constant MSG_WITHDRAW_VALIDATOR_COMMISSION = "/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission";
 
 /// @dev The DistributionI contract's instance.
-DistributionI constant DISTRIBUTION_CONTRACT = DistributionI(DISTRIBUTION_PRECOMPILE_ADDRESS);
+DistributionI constant DISTRIBUTION_CONTRACT = DistributionI(
+    DISTRIBUTION_PRECOMPILE_ADDRESS
+);
 
-struct ValidatorSlashEvent {
-    uint64 validatorPeriod;
-    Dec fraction;
-}
+    struct ValidatorSlashEvent {
+        uint64 validatorPeriod;
+        Dec fraction;
+    }
 
-struct ValidatorDistributionInfo {
-    string operatorAddress;
-    DecCoin[] selfBondRewards;
-    DecCoin[] commission;
-}
+    struct ValidatorDistributionInfo {
+        string operatorAddress;
+        DecCoin[] selfBondRewards;
+        DecCoin[] commission;
+    }
 
-struct DelegationDelegatorReward {
-    string validatorAddress;
-    DecCoin[] reward;
-}
+    struct DelegationDelegatorReward {
+        string validatorAddress;
+        DecCoin[] reward;
+    }
 
 /// @author Evmos Team
 /// @title Distribution Precompile Contract
 /// @dev The interface through which solidity contracts will interact with Distribution
 /// @custom:address 0x0000000000000000000000000000000000000801
-interface DistributionI is distributionAuth.DistributionAuthorizationI {
+interface DistributionI is authorization.DistributionAuthorizationI {
     /// TRANSACTIONS
     /// @dev Change the address, that can withdraw the rewards of a delegator.
     /// Note that this address cannot be a module account.
@@ -54,22 +56,14 @@ interface DistributionI is distributionAuth.DistributionAuthorizationI {
     function withdrawDelegatorRewards(
         address delegatorAddress,
         string memory validatorAddress
-    )
-    external
-    returns (
-        Coin[] calldata amount
-    );
+    ) external returns (Coin[] calldata amount);
 
     /// @dev Withdraws the rewards commission of a validator.
     /// @param validatorAddress The address of the validator
     /// @return amount The amount of Coin withdrawn
     function withdrawValidatorCommission(
         string memory validatorAddress
-    )
-    external
-    returns (
-        Coin[] calldata amount
-    );
+    ) external returns (Coin[] calldata amount);
 
     /// QUERIES
     /// @dev Queries validator commission and self-delegation rewards for validator.
@@ -89,36 +83,28 @@ interface DistributionI is distributionAuth.DistributionAuthorizationI {
     /// @return rewards The validator's outstanding rewards
     function validatorOutstandingRewards(
         string memory validatorAddress
-    )
-    external
-    view
-    returns (
-        DecCoin[] calldata rewards
-    );
+    ) external view returns (DecCoin[] calldata rewards);
 
     /// @dev Queries the accumulated commission for a validator.
     /// @param validatorAddress The address of the validator
     /// @return commission The validator's commission
     function validatorCommission(
         string memory validatorAddress
-    )
-    external
-    view
-    returns (
-        DecCoin[] calldata commission
-    );
+    ) external view returns (DecCoin[] calldata commission);
 
     /// @dev Queries the slashing events for a validator in a given height interval
     /// defined by the starting and ending height.
     /// @param validatorAddress The address of the validator
     /// @param startingHeight The starting height
     /// @param endingHeight The ending height
+    /// @param pageRequest Defines a pagination for the request.
     /// @return slashes The validator's slash events
     /// @return pageResponse The pagination response for the query
     function validatorSlashes(
         string memory validatorAddress,
         uint64 startingHeight,
-        uint64 endingHeight
+        uint64 endingHeight,
+        PageRequest calldata pageRequest
     )
     external
     view
@@ -134,12 +120,7 @@ interface DistributionI is distributionAuth.DistributionAuthorizationI {
     function delegationRewards(
         address delegatorAddress,
         string memory validatorAddress
-    )
-    external
-    view
-    returns (
-        DecCoin[] calldata rewards
-    );
+    ) external view returns (DecCoin[] calldata rewards);
 
     /// @dev Queries the total rewards accrued by each validator, that a given
     /// address has delegated to.

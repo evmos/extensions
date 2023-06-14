@@ -16,7 +16,7 @@ contract SimpleStaker {
 
         string[] memory allowedList = new string[](0); // Defaults to tx.origin when empty
         bool success = STAKING_CONTRACT.approve(
-            msg.sender,
+            address(this),
             type(uint256).max,
             stakingMethods
         );

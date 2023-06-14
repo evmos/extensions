@@ -10,7 +10,7 @@ contract StakingManager {
     /// @dev This creates a Cosmos Authorization Grant for the given methods.
     /// @dev This emits an Approval event.
     function approveAllStakingMethodsWithMaxAmount() public {
-        bool success = STAKING_CONTRACT.approve(msg.sender, type(uint256).max, stakingMethods);
+        bool success = STAKING_CONTRACT.approve(address(this), type(uint256).max, stakingMethods);
         require(success, "Failed to approve staking methods");
     }
 
@@ -20,7 +20,7 @@ contract StakingManager {
     /// @param _methods The message type URLs of the methods to approve.
     /// @param _amount The amount of tokens approved to be spent in aevmos.
     function approveStakingMethods(string[] calldata _methods, uint256 _amount) public {
-        bool success = STAKING_CONTRACT.approve(msg.sender, _amount, _methods);
+        bool success = STAKING_CONTRACT.approve(address(this), _amount, _methods);
         require(success, "Failed to approve staking methods");
     }
 
