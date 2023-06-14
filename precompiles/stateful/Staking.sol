@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: LGPL-3.0-only
-pragma solidity >=0.8.17 .0;
+pragma solidity >=0.8.18;
 
-import "../authorization/Authorization.sol" as authorization;
+import "../common/Authorization.sol" as authorization;
 import "../common/Types.sol";
 
 /// @dev The StakingI contract's address.
@@ -18,72 +18,72 @@ string constant MSG_CANCEL_UNDELEGATION = "/cosmos.staking.v1beta1.MsgCancelUnbo
 
 /// @dev Defines the initial commission rates to be used for creating
 /// a validator.
-    struct CommissionRates {
-        uint256 rate;
-        uint256 maxRate;
-        uint256 maxChangeRate;
-    }
+struct CommissionRates {
+    uint256 rate;
+    uint256 maxRate;
+    uint256 maxChangeRate;
+}
 
 /// @dev Defines commission parameters for a given validator.
-    struct Commission {
-        CommissionRates commissionRates;
-        uint256 updateTime;
-    }
+struct Commission {
+    CommissionRates commissionRates;
+    uint256 updateTime;
+}
 
 
 /// @dev Represents a validator in the staking module.
-    struct Validator {
-        string operatorAddress;
-        string consensusPubkey;
-        bool jailed;
-        BondStatus status;
-        uint256 tokens;
-        uint256 delegatorShares; // TODO: decimal
-        string description;
-        int64 unbondingHeight;
-        int64 unbondingTime;
-        uint256 commission;
-        uint256 minSelfDelegation;
-    }
+struct Validator {
+    string operatorAddress;
+    string consensusPubkey;
+    bool jailed;
+    BondStatus status;
+    uint256 tokens;
+    uint256 delegatorShares; // TODO: decimal
+    string description;
+    int64 unbondingHeight;
+    int64 unbondingTime;
+    uint256 commission;
+    uint256 minSelfDelegation;
+}
 
-    struct RedelegationResponse {
-        Redelegation redelegation;
-        RedelegationEntryResponse[] entries;
-    }
+struct RedelegationResponse {
+    Redelegation redelegation;
+    RedelegationEntryResponse[] entries;
+}
 
-    struct Redelegation {
-        string delegatorAddress;
-        string validatorSrcAddress;
-        string validatorDstAddress;
-        RedelegationEntry[] entries;
-    }
+struct Redelegation {
+    string delegatorAddress;
+    string validatorSrcAddress;
+    string validatorDstAddress;
+    RedelegationEntry[] entries;
+}
 
-    struct RedelegationEntryResponse {
-        RedelegationEntry redelegationEntry;
-        uint256 balance;
-    }
+struct RedelegationEntryResponse {
+    RedelegationEntry redelegationEntry;
+    uint256 balance;
+}
 
-    struct RedelegationEntry {
-        int64 creationHeight;
-        int64 completionTime;
-        uint256 initialBalance;
-        uint256 sharesDst; // TODO: decimal
-    }
+struct RedelegationEntry {
+    int64 creationHeight;
+    int64 completionTime;
+    uint256 initialBalance;
+    uint256 sharesDst; // TODO: decimal
+}
 
-    struct UnbondingDelegationEntry {
-        int64 creationHeight;
-        int64 completionTime;
-        uint256 initialBalance;
-        uint256 balance;
-    }
+struct UnbondingDelegationEntry {
+    int64 creationHeight;
+    int64 completionTime;
+    uint256 initialBalance;
+    uint256 balance;
+}
 
 /// @dev The status of the validator.
-    enum BondStatus {
-        Unspecified,
-        Unbonded,
-        Unbonding,
-        Bonded
-    }
+enum BondStatus {
+    Unspecified,
+    Unbonded,
+    Unbonding,
+    Bonded
+}
 
 /// @author Evmos Team
 /// @title Staking Precompiled Contract

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: LGPL-3.0-only
-pragma solidity >=0.8.17 .0;
+pragma solidity >=0.8.18;
 
-import "../authorization/DistributionAuthorization.sol" as authorization;
+import "../common//DistributionAuthorization.sol" as authorization;
 import "../common/Types.sol";
 
 /// @dev The DistributionI contract's address.
@@ -17,21 +17,21 @@ DistributionI constant DISTRIBUTION_CONTRACT = DistributionI(
     DISTRIBUTION_PRECOMPILE_ADDRESS
 );
 
-    struct ValidatorSlashEvent {
-        uint64 validatorPeriod;
-        Dec fraction;
-    }
+struct ValidatorSlashEvent {
+    uint64 validatorPeriod;
+    Dec fraction;
+}
 
-    struct ValidatorDistributionInfo {
-        string operatorAddress;
-        DecCoin[] selfBondRewards;
-        DecCoin[] commission;
-    }
+struct ValidatorDistributionInfo {
+    string operatorAddress;
+    DecCoin[] selfBondRewards;
+    DecCoin[] commission;
+}
 
-    struct DelegationDelegatorReward {
-        string validatorAddress;
-        DecCoin[] reward;
-    }
+struct DelegationDelegatorReward {
+    string validatorAddress;
+    DecCoin[] reward;
+}
 
 /// @author Evmos Team
 /// @title Distribution Precompile Contract

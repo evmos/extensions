@@ -11,21 +11,21 @@ ICS20I constant ICS20_CONTRACT = ICS20I(ICS20_PRECOMPILE_ADDRESS);
 
 /// @dev DenomTrace contains the base denomination for ICS20 fungible tokens and the
 /// source tracing information path.
-    struct DenomTrace {
-        // path defines the chain of port/channel identifiers used for tracing the
-        // source of the fungible token.
-        string path;
-        // base denomination of the relayed fungible token.
-        string baseDenom;
-    }
+struct DenomTrace {
+    // path defines the chain of port/channel identifiers used for tracing the
+    // source of the fungible token.
+    string path;
+    // base denomination of the relayed fungible token.
+    string baseDenom;
+}
 
 /// @dev Allocation represents a single allocation for an IBC fungible token transfer.
-    struct Allocation {
-        string sourcePort;
-        string sourceChannel;
-        Coin[] spendLimit;
-        string[] allowList;
-    }
+struct Allocation {
+    string sourcePort;
+    string sourceChannel;
+    Coin[] spendLimit;
+    string[] allowList;
+}
 
 /// @author Evmos Team
 /// @title ICS20 Transfer Precompiled Contract
