@@ -1,5 +1,5 @@
-// SPDX-License-Identifier: LGPL-v3
-pragma solidity >=0.8.17;
+// SPDX-License-Identifier: LGPL-3.0-only
+pragma solidity >=0.8.17 .0;
 
 /// @author Evmos Team
 /// @title Authorization Interface
@@ -15,6 +15,15 @@ interface AuthorizationI {
         uint256 amount,
         string[] calldata methods
     ) external returns (bool approved);
+
+    /// @dev Revokes a list of Cosmos transactions.
+    /// @param spender The address which will spend the funds.
+    /// @param methods The message type URLs of the methods to revoke.
+    /// @return revoked Boolean value to indicate if the revocation was successful.
+    function revoke(
+        address spender,
+        string[] calldata methods
+    ) external returns (bool revoked);
 
     /// @dev Increase the allowance of a given spender by a specific amount of tokens for IBC
     /// transfer methods or staking.
@@ -40,7 +49,6 @@ interface AuthorizationI {
         string[] calldata methods
     ) external returns (bool approved);
 
-
     /// @dev Returns the remaining number of tokens that spender will be allowed to spend
     /// on behalf of the owner through IBC transfer methods or staking. This is zero by default.
     /// @param owner The address of the account owning tokens.
@@ -65,6 +73,16 @@ interface AuthorizationI {
         address indexed spender,
         string[] methods,
         uint256 value
+    );
+
+    /// @dev This event is emitted when an owner revokes a spender's allowance.
+    /// @param owner The owner of the tokens.
+    /// @param spender The address which will spend the funds.
+    /// @param methods The message type URLs of the methods for which the approval is set.
+    event Revocation(
+        address indexed owner,
+        address indexed spender,
+        string[] methods
     );
 
     /// @dev This event is emitted when the allowance of a spender is changed by a call to the decrease or increase

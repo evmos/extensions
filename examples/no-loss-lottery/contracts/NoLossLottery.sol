@@ -203,7 +203,7 @@ contract NoLossLottery {
     /// @dev approves the staking and distribution contracts to spend the lottery's funds
     function _approveRequiredMsgs(uint256 _amount) internal {
         string[] memory allowedList = new string[](0); // Defaults to the tx.origin address
-        bool successStk = STAKING_CONTRACT.approve(tx.origin, _amount, stakingMethods);
+        bool successStk = STAKING_CONTRACT.approve(address(this), _amount, stakingMethods);
         require(successStk, "Staking Approve failed");
         bool successDist = DISTRIBUTION_CONTRACT.approve(address(this), distributionMethods, allowedList);
         require(successDist, "Distribution Approve failed");
