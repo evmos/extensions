@@ -38,7 +38,7 @@ contract SimpleStaker {
         uint256 _amount
     ) public {
         bool success = STAKING_CONTRACT.delegate(msg.sender, _validatorAddr, _amount);
-        require(success, "Failed to approve stake tokens");
+        require(success, "Failed to stake tokens");
     }
 
     /// @dev withdraw delegation rewards from the specified validator address
