@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: LGPL-3.0-only
-pragma solidity >=0.8.18;
+pragma solidity >=0.8.17;
 
 import "../common/Authorization.sol" as authorization;
 import "../common/Types.sol";
@@ -164,10 +164,10 @@ interface StakingI is authorization.AuthorizationI {
 
     /// @dev Queries validator info for a given validator address.
     /// @param validatorAddress The address of the validator.
-    /// @return validators The validator info for the given validator address.
+    /// @return validator The validator info for the given validator address.
     function validator(
         string memory validatorAddress
-    ) external view returns (Validator[] calldata validators);
+    ) external view returns (Validator calldata validator);
 
     /// @dev Queries all validators that match the given status.
     /// @param status Enables to query for validators matching a given status.
@@ -198,13 +198,13 @@ interface StakingI is authorization.AuthorizationI {
     /// for a given delegator and/or origin validator address
     /// and/or destination validator address
     /// in a specified pagination manner.
-    /// @param delegatorAddress The address of the delegator as string (can be empty string).
+    /// @param delegatorAddress The address of the delegator as string (can be a zero address).
     /// @param srcValidatorAddress Defines the validator address to redelegate from (can be empty string).
     /// @param dstValidatorAddress Defines the validator address to redelegate to (can be empty string).
     /// @param pageRequest Defines an optional pagination for the request.
     /// @return response Holds the redelegations for the given delegator, source and destination validator combination.
     function redelegations(
-        string memory delegatorAddress,
+        address delegatorAddress,
         string memory srcValidatorAddress,
         string memory dstValidatorAddress,
         PageRequest calldata pageRequest

@@ -524,9 +524,9 @@
 	{
 		"inputs": [
 			{
-				"internalType": "string",
+				"internalType": "address",
 				"name": "delegatorAddress",
-				"type": "string"
+				"type": "address"
 			},
 			{
 				"internalType": "string",
@@ -856,9 +856,9 @@
 						"type": "uint256"
 					}
 				],
-				"internalType": "struct Validator[]",
-				"name": "validators",
-				"type": "tuple[]"
+				"internalType": "struct Validator",
+				"name": "validator",
+				"type": "tuple"
 			}
 		],
 		"stateMutability": "view",

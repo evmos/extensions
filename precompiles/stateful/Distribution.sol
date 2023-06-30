@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: LGPL-3.0-only
 pragma solidity >=0.8.18;
 
-import "../common//DistributionAuthorization.sol" as authorization;
 import "../common/Types.sol";
 
 /// @dev The DistributionI contract's address.
@@ -37,7 +36,7 @@ struct DelegationDelegatorReward {
 /// @title Distribution Precompile Contract
 /// @dev The interface through which solidity contracts will interact with Distribution
 /// @custom:address 0x0000000000000000000000000000000000000801
-interface DistributionI is authorization.DistributionAuthorizationI {
+interface DistributionI {
     /// TRANSACTIONS
     /// @dev Change the address, that can withdraw the rewards of a delegator.
     /// Note that this address cannot be a module account.
@@ -75,7 +74,7 @@ interface DistributionI is authorization.DistributionAuthorizationI {
     external
     view
     returns (
-        ValidatorDistributionInfo[] calldata distributionInfo // FIXME: remove unnecessary slice
+        ValidatorDistributionInfo calldata distributionInfo
     );
 
     /// @dev Queries the outstanding rewards of a validator address.

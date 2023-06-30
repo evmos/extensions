@@ -163,9 +163,43 @@
 		"name": "allowance",
 		"outputs": [
 			{
-				"internalType": "uint256",
-				"name": "remaining",
-				"type": "uint256"
+				"components": [
+					{
+						"internalType": "string",
+						"name": "sourcePort",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "sourceChannel",
+						"type": "string"
+					},
+					{
+						"components": [
+							{
+								"internalType": "string",
+								"name": "denom",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "amount",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct Coin[]",
+						"name": "spendLimit",
+						"type": "tuple[]"
+					},
+					{
+						"internalType": "string[]",
+						"name": "allowList",
+						"type": "string[]"
+					}
+				],
+				"internalType": "struct Allocation[]",
+				"name": "allocations",
+				"type": "tuple[]"
 			}
 		],
 		"stateMutability": "view",
@@ -310,9 +344,9 @@
 						"type": "string"
 					}
 				],
-				"internalType": "struct DenomTrace[]",
+				"internalType": "struct DenomTrace",
 				"name": "denomTrace",
-				"type": "tuple[]"
+				"type": "tuple"
 			}
 		],
 		"stateMutability": "nonpayable",

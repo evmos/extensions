@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: LGPL-3.0-only
-pragma solidity >=0.8.18;
+pragma solidity >=0.8.17;
 
 import "../common/Types.sol";
 
@@ -69,7 +69,7 @@ interface ICS20I {
     /// @dev DenomTrace defines a method for returning a denom trace.
     function denomTrace(
         string memory hash
-    ) external returns (DenomTrace[] memory denomTrace);
+    ) external returns (DenomTrace memory denomTrace);
 
     /// @dev DenomHash defines a method for returning a hash of the denomination trace info.
     function denomHash(
@@ -89,14 +89,15 @@ interface ICS20I {
     function revoke(address spender) external returns (bool revoked);
 
     /// @dev Returns the remaining number of tokens that spender will be allowed to spend on behalf of owner through
-    /// IBC transfers. This is zero by default.
+    /// IBC transfers. This is an empty by array.
     /// @param owner The address of the account owning tokens.
     /// @param spender The address of the account able to transfer the tokens.
-    /// @return remaining The remaining amount allowed to spend.
+    /// @return allocations The remaining amounts allowed to spend for
+    /// corresponding source port and channel.
     function allowance(
         address owner,
         address spender
-    ) external view returns (uint256 remaining);
+    ) external view returns (Allocation[] memory allocations);
 
     /// @dev Increase the allowance of a given spender by a specific amount of tokens for IBC transfer methods.
     /// @param spender The address which will spend the funds.
