@@ -29,16 +29,16 @@ contract SimpleStaker {
         require(success, "Failed to approve withdraw delegator rewards method");
     }
 
-    /// @dev stake a given amount of tokens. Returns the completion time of the staking transaction.
+    /// @dev stake a given amount of tokens.
     /// @dev This emits an Delegate event.
     /// @param _validatorAddr The address of the validator.
     /// @param _amount The amount of tokens to stake in aevmos.
-    /// @return completionTime The completion time of the staking transaction.
     function stakeTokens(
         string memory _validatorAddr,
         uint256 _amount
-    ) public returns (int64 completionTime) {
-        return STAKING_CONTRACT.delegate(msg.sender, _validatorAddr, _amount);
+    ) public {
+        bool success = STAKING_CONTRACT.delegate(msg.sender, _validatorAddr, _amount);
+        require(success, "Failed to stake tokens");
     }
 
     /// @dev withdraw delegation rewards from the specified validator address
