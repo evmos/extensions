@@ -29,16 +29,13 @@ We have provided convenient constants - `MSG_DELEGATE`, `MSG_UNDELEGATE`,
 This is done by calling the `approve` function and will create an authorization grant for the given Cosmos SDK message
 for the given spender address (this usually should be `address(this)` to approve the calling contract.
 
-Note that the `approve` method for the `Staking` precompiled is different
-than the `Distribution` precompiled.
 Use the corresponding method when approving methods for each precompiled
-(e.g., use `STAKING_CONTRACT.approve(...)` for staking methods,
-and `DISTRIBUTION_CONTRACT.approve(...)` for distribution methods).
+(e.g., use `STAKING_CONTRACT.approve(...)` for staking methods)
+The distribution contract does not require approvals.
 
 The [Simple Staker](./contracts/SimpleStaker.sol) has the function `approveRequiredMethods()`
 to perform the necessary approvals.
 It approves the required methods for staking tokens (`MSG_DELEGATE`)
-and withdraw staking rewards (`MSG_WITHDRAW_DELEGATOR_REWARD`)
 
 ## Allowances
 
