@@ -5,62 +5,6 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "owner",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "spender",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "string[]",
-        "name": "methods",
-        "type": "string[]"
-      },
-      {
-        "indexed": false,
-        "internalType": "string[]",
-        "name": "allowedList",
-        "type": "string[]"
-      }
-    ],
-    "name": "Approval",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "owner",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "spender",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "string[]",
-        "name": "methods",
-        "type": "string[]"
-      }
-    ],
-    "name": "Revocation",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
         "name": "caller",
         "type": "address"
       },
@@ -117,35 +61,6 @@
     ],
     "name": "WithdrawValidatorCommission",
     "type": "event"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "spender",
-        "type": "address"
-      },
-      {
-        "internalType": "string[]",
-        "name": "methods",
-        "type": "string[]"
-      },
-      {
-        "internalType": "string[]",
-        "name": "allowedList",
-        "type": "string[]"
-      }
-    ],
-    "name": "approve",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "approved",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "function"
   },
   {
     "inputs": [
@@ -300,30 +215,6 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "spender",
-        "type": "address"
-      },
-      {
-        "internalType": "string[]",
-        "name": "methods",
-        "type": "string[]"
-      }
-    ],
-    "name": "revoke",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "revoked",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
         "name": "delegatorAddress",
         "type": "address"
       },
@@ -442,9 +333,9 @@
             "type": "tuple[]"
           }
         ],
-        "internalType": "struct ValidatorDistributionInfo[]",
+        "internalType": "struct ValidatorDistributionInfo",
         "name": "distributionInfo",
-        "type": "tuple[]"
+        "type": "tuple"
       }
     ],
     "stateMutability": "view",
