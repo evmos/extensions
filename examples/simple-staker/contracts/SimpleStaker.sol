@@ -7,26 +7,17 @@ import "../../../precompiles/stateful/Distribution.sol";
 contract SimpleStaker {
     /// Methods to approve when calling approveRequiredMethods()
     string[] private stakingMethods = [MSG_DELEGATE];
-    string[] private distributionMethods = [MSG_WITHDRAW_DELEGATOR_REWARD];
 
     /// @dev Approves the required transactions for delegation and withdrawal of staking rewards transactions.
     /// @dev This creates a Cosmos Authorization Grants for the given methods.
     /// @dev This emits an Approval event.
     function approveRequiredMethods() public {
-
-        string[] memory allowedList = new string[](0); // Defaults to tx.origin when empty
         bool success = STAKING_CONTRACT.approve(
             address(this),
             type(uint256).max,
             stakingMethods
         );
         require(success, "Failed to approve delegate method");
-        success = DISTRIBUTION_CONTRACT.approve(
-            address(this),
-            distributionMethods,
-            allowedList
-        );
-        require(success, "Failed to approve withdraw delegator rewards method");
     }
 
     /// @dev stake a given amount of tokens.
