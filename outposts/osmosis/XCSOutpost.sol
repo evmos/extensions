@@ -5,15 +5,15 @@ import ".../../../precompiles/stateful/ICS20.sol";
 
 contract XCSOutpost {
 
-    // The constants for channel, port and base denom
+    /// @dev The constants for channel, port and base denom
     string private channel = "channel-157";
     string private port = "transfer";
     string private XCS_CONTRACT = "osmo1ye7nsslrgwc6ngmav67h26zckg8wjeay4agnlzke66f8apq3ls8sqednc4";
 
-    // Default allowed list is empty indicating no restrictions
+    /// @dev Default allowed list is empty indicating no restrictions
     string[] private defaultAllowList = new string[](0);
 
-    // Creates an approval allocation against the smart contract for IBC transfers.
+    /// @dev Creates an approval allocation against the smart contract for IBC transfers.
     function _approveTransfer(uint256 _amount, string calldata _baseDenom) private {
         // Create the spend limit of coins, in this case only aevmos
         Coin[] memory spendLimit = new Coin[](1);
@@ -28,16 +28,22 @@ contract XCSOutpost {
     }
 
 
-    // Preparation of memo field for cross chain swap for case 4 - Native (aevmos) to Osmosis Native (uosmo)
-    function nativeToOsmoNativeMemo(string memory output_denom, string memory receiver) public pure returns (string memory) {
+    /// @dev Preparation of memo field for cross chain swap for case 4 - Native (atevmos) to Osmosis Native (uosmo)
+    /// @param _output_denom The target denomination to be swapped for, e.g. "uosmo"
+    /// @param _receiver The address bech32 string receiving the swapped funds
+    function nativeToOsmoNativeMemo(string memory _output_denom, string memory _receiver) public pure returns (string memory) {
         string memory part1 = "{\"wasm\": {\"contract\": \"osmo1ye7nsslrgwc6ngmav67h26zckg8wjeay4agnlzke66f8apq3ls8sqednc4\", \"msg\": {\"osmosis_swap\": {\"output_denom\":\"";
         string memory part2 = "\", \"slippage\": {\"twap\": {\"slippage_percentage\": \"20\", \"window_seconds\": 20}}, \"receiver\":\"";
         string memory part3 = "\", \"on_failed_delivery\": \"do_nothing\"}}}}";
 
-        return string(abi.encodePacked(part1, output_denom, part2, receiver, part3));
+        return string(abi.encodePacked(part1, _output_denom, part2, _receiver, part3));
     }
 
-    // The main Swap function which will swap a base denom for an output denom using the native to osmosis native case
+    // @dev The main Swap function which will swap a base denom for an output denom using the native to osmosis native case
+    // @param _amount The amount of the base denomination to be swapped
+    // @param _baseDenom The base denomination used for the swap, e.g. "atevmos" for Evmos testnet
+    // @param _outputDenom The target denomination to be swapped for, e.g. "uosmo"
+    // @param _receiver The address bech32 string receiving the swapped funds
     function osmosisSwap(uint256 _amount, string calldata _baseDenom, string calldata _outputDenom, string calldata _receiver) public {
         _approveTransfer(_amount, _baseDenom);
         Height memory timeoutHeight = Height(100,100);
