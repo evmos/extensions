@@ -34,7 +34,8 @@ and even manage accounts on other blockchains to access any functionality built 
 ### Structure
 
 - `examples/`  contracts that utilize precompiled contracts to interact with the Cosmos SDK.
-- `precompiles/` contains Solidity interfaces for all currently supported precompiled contracts
+- `outposts/`  contracts that utilize the IBC extensions to interact with functionality on other chains like liquid staking on Stride and swapping on Omosis.
+- `precompiles/` contains Solidity interfaces for all currently supported precompiled contracts.
   - `abi/` contains the generated ABI for each precompile
   - `stateful/` - contains the Solidity interfaces for all stateful precompiles (ones that change state on the blockchain)
   - `stateless/` - contains the Solidity interfaces for all stateless precompiles (ones that do not change state on the blockchain)
