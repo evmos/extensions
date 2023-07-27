@@ -18,6 +18,7 @@ devs have a simple way to trigger actions on the Stride chain.
 This contract has the following constants:
 - `channel` - the IBC channel on Evmos for Stride - `channel-25` **THIS IS FOR MAINNET**
 - `port` - The IBC port for the transfer - `transfer`
+- `baseDenom` - The base denom we are sending to the Stride chain - `aevmos` or for testnet `atevmos`
 
 ### Functions
 

@@ -9,6 +9,7 @@ contract LiquidStakeOutpost {
     // The constants for channel and port
     string private channel = "channel-25";
     string private port = "transfer";
+    string private baseDenom = "aevmos";
 
     // Default allowed list is empty indicating no restrictions
     string[] private defaultAllowList = new string[](0);
@@ -46,19 +47,20 @@ contract LiquidStakeOutpost {
         return memo;
     }
 
-    /// @dev Transfers the specified amount of aevmos to the specified receiver on the Stride chain
-    /// with the correct memo to trigger a liquid staking action
-    /// @param _amount The amount of aevmos to be swapped
+    /// @dev Transfers the specified amount of "aevmos" to the specified receiver on the Stride chain
+    /// with the correct memo to trigger a liquid staking action.
+    /// NOTE - on testnet the base denom will be "atevmos"
+    /// @param _amount The amount of "aevmos" to be swapped
     /// @param _receiver The bech32 address of the receiver on the Stride chain
     function liquidStakeEvmos(uint256 _amount, string memory _receiver) public {
-        _approveTransfer(_amount, "aevmos");
+        _approveTransfer(_amount, baseDenom);
         Height memory timeoutHeight = Height(100,100);
         string memory memo = buildLiquidStakeMemo(_receiver);
 
         ICS20_CONTRACT.transfer(
             port,
             channel,
-            "aevmos",
+            baseDenom,
             _amount,
             msg.sender,
             _receiver,
