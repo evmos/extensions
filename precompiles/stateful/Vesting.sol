@@ -25,9 +25,7 @@ struct Period {
 
 /// @author Evmos Team
 /// @title Vesting Precompiled Contract
-/// @dev The interface through which solidity contracts will interact with vesting.
-/// We follow this same interface including four-byte function selectors, in the precompile that
-/// wraps the pallet.
+/// @dev The interface through which solidity contracts will interact with vesting module.
 /// @custom:address 0x0000000000000000000000000000000000000803
 interface VestingI {
     /// @dev Defines a method for creating a new clawback vesting account.
