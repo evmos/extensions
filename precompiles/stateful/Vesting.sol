@@ -30,7 +30,7 @@ struct Period {
 interface VestingI {
     /// @dev Defines a method for creating a new clawback vesting account.
     /// @param funderAddress The address of the account that will fund the vesting account.
-    /// @param vestingAddress The address of the account that will receive the vesting account.
+    /// @param vestingAddress The address of the account that will be converted into a vesting account.
     /// @param enableGovClawback If the vesting account will be subject to governance clawback.
     function createClawbackVestingAccount(
         address funderAddress,
@@ -41,7 +41,7 @@ interface VestingI {
     /// @dev Defines a method for funding a vesting account.
     /// @param funderAddress The address of the account that will fund the vesting account.
     /// @param vestingAddress The address of the clawback vesting account that will receive the vesting funds.
-    /// @param startTime The time at which the vesting account will start.
+    /// @param startTime The time at which the vesting will start.
     /// @param lockupPeriods The lockup periods of the vesting account.
     /// @param vestingPeriods The vesting periods of the vesting account.
     function fundVestingAccount(
@@ -87,8 +87,8 @@ interface VestingI {
     ) external view returns (Coin[] memory locked, Coin[] memory unvested, Coin[] memory vested);
 
     /// @dev Defines an event that is emitted when a clawback vesting account is created.
-    /// @param funderAddress The address of the account that funded the vesting account.
-    /// @param vestingAddress The address of the account that received the vesting account.
+    /// @param funderAddress The address of the account that can fund the vesting account.
+    /// @param vestingAddress The address of the account that has been converted to a vesting account.
     event CreateClawbackVestingAccount(
         address indexed funderAddress,
         address indexed vestingAddress
@@ -97,7 +97,7 @@ interface VestingI {
     /// @dev Defines an event that is emitted when a clawback vesting account is funded.
     /// @param funderAddress The address of the account that funded the vesting account.
     /// @param vestingAddress The address of the account that received the vesting account.
-    /// @param startTime The time at which the vesting account will start.
+    /// @param startTime The time at which the vesting will start.
     /// @param lockupPeriods The lockup periods of the vesting account.
     /// @param vestingPeriods The vesting periods of the vesting account.
     event FundVestingAccount(
@@ -119,7 +119,7 @@ interface VestingI {
     );
 
     /// @dev Defines an event that is emitted when a vesting account's funder is updated.
-    /// @param funderAddress The address of the account that funded the vesting account.
+    /// @param funderAddress The address of the account that can fund the vesting account.
     /// @param newFunderAddress The address of the new funder of the vesting account.
     /// @param vestingAddress The address of the vesting account.
     event UpdateVestingFunder(
