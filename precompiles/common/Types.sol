@@ -2,7 +2,7 @@
 pragma solidity >=0.8.17;
 
 
-/// @dev Allocation represents a single allocation for an IBC fungible token transfer.
+/// @dev ICS20Allocation represents a single allocation for an IBC fungible token transfer.
 struct ICS20Allocation {
     string   sourcePort;
     string   sourceChannel;
