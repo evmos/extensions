@@ -2,13 +2,15 @@
 pragma solidity >=0.8.17;
 
 import ".../../../precompiles/stateful/ICS20.sol";
+import "../../precompiles/common/Types.sol";
+
 
 contract XCSOutpost {
 
     /// @dev The constants for channel, port and base denom
-    string private channel = "channel-157";
+    string private channel = "channel-215";
     string private port = "transfer";
-    string private XCS_CONTRACT = "osmo1ye7nsslrgwc6ngmav67h26zckg8wjeay4agnlzke66f8apq3ls8sqednc4";
+    string private XCS_CONTRACT = "osmo1a34wxsxjwvtz3ua4hnkh4lv3d4qrgry0fhkasppplphwu5k538tqcyms9x";
 
     /// @dev Default allowed list is empty indicating no restrictions
     string[] private defaultAllowList = new string[](0);
@@ -19,8 +21,8 @@ contract XCSOutpost {
         Coin[] memory spendLimit = new Coin[](1);
         spendLimit[0] = Coin(_baseDenom, _amount);
         // Create allocation for coins on the specified channel and port
-        Allocation[] memory allocations = new Allocation[](1);
-        allocations[0] = Allocation(port, channel, spendLimit, defaultAllowList);
+        ICS20Allocation[] memory allocations = new ICS20Allocation[](1);
+        allocations[0] = ICS20Allocation(port, channel, spendLimit, defaultAllowList);
         // Approve the contract address (grantee) for the specified allocations
         // The granter is always assumed to be the origin
         bool approved = ICS20_CONTRACT.approve(address(this), allocations);
@@ -31,12 +33,30 @@ contract XCSOutpost {
     /// @dev Preparation of memo field for cross chain swap for case 4 - Native (atevmos) to Osmosis Native (uosmo)
     /// @param _output_denom The target denomination to be swapped for, e.g. "uosmo"
     /// @param _receiver The address bech32 string receiving the swapped funds
-    function nativeToOsmoNativeMemo(string memory _output_denom, string memory _receiver) public pure returns (string memory) {
-        string memory part1 = "{\"wasm\": {\"contract\": \"osmo1ye7nsslrgwc6ngmav67h26zckg8wjeay4agnlzke66f8apq3ls8sqednc4\", \"msg\": {\"osmosis_swap\": {\"output_denom\":\"";
-        string memory part2 = "\", \"slippage\": {\"twap\": {\"slippage_percentage\": \"20\", \"window_seconds\": 20}}, \"receiver\":\"";
-        string memory part3 = "\", \"on_failed_delivery\": \"do_nothing\"}}}}";
+    function nativeToOsmoNativeMemo(string memory _output_denom, string memory _receiver) public view returns (string memory) {
+        string memory memo = string(abi.encodePacked(
+            '{',
+                '"wasm": {',
+                    '"contract": "', XCS_CONTRACT, '",',
+                    '"msg": {',
+                        '"osmosis_swap": {',
+                            '"output_denom": "', _output_denom, '",',
+                            '"slippage": {',
+                                '"twap": {',
+                                    '"slippage_percentage": "10",',
+                                    '"window_seconds": 30',
+                                 '}',
+                            '},',
+                            '"receiver": "', _receiver, '",',
+                            '"on_failed_delivery": "do_nothing"',
+                        '}',
+                    '}',
+                '}',
+            '}'
+        ));
 
-        return string(abi.encodePacked(part1, _output_denom, part2, _receiver, part3));
+        return memo;
+
     }
 
     // @dev The main Swap function which will swap a base denom for an output denom using the native to osmosis native case
