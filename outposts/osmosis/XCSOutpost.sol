@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: LGPL-3.0-only
 pragma solidity >=0.8.17;
 
-import "ICS20.sol";
+import ".../../../precompiles/stateful/ICS20.sol";
+import "../../precompiles/common/Types.sol";
 
 contract XCSOutpost {
 
