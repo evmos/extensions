@@ -4,14 +4,13 @@ pragma solidity >=0.8.17;
 import ".../../../precompiles/stateful/ICS20.sol";
 import "../../precompiles/common/Types.sol";
 
-
 contract StrideOutpost {
 
     // The constants for channel and port
-    string private channel = "channel-216";
+    string private channel = "channel-25";
     string private port = "transfer";
-    string private baseDenom = "atevmos";
-    string private stDenom = "ibc/85F765A054C500BC1DD455231B08FC666948D1610228AE60300A5D809A3A826F"; // The IBC denom of stAtevmos
+    string private baseDenom = "aevmos";
+    string private stDenom = "ibc/C9364B2C453F0428D04FD40B6CF486BA138FA462FE43A116268A7B695AFCFE7F"; // The IBC denom of stAevmos
 
     // Default allowed list is empty indicating no restrictions
     string[] private defaultAllowList = new string[](0);
@@ -41,8 +40,8 @@ contract StrideOutpost {
                 '"autopilot": {',
                     '"receiver": "', _strideReceiver, '",',
                     '"stakeibc": {',
-                    '"ibc_receiver":"', _evmosReceiver, '",',
-                    '"action": "LiquidStake"',
+                        '"ibc_receiver":"', _evmosReceiver, '",',
+                        '"action": "LiquidStake"',
                     '}',
                 '}',
             '}'
@@ -60,7 +59,7 @@ contract StrideOutpost {
                 '"autopilot": {',
                     '"receiver": "', _strideReceiver, '",',
                     '"stakeibc": {',
-                        '"transfer_channel": "channel-0"',
+                        '"transfer_channel": "channel-9"',
                         '"ibc_receiver":"', _evmosReceiver, '",',
                         '"action": "RedeemStake"',
                     '}',
